@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TafoHub Proxy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; 
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: #000; 
+            background: radial-gradient(circle at center, #001a33 0%, #000810 70%, #000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 12px;
+            width: 95%; 
+            max-width: 1600px;
+            z-index: 10;
+        }
+
+        .box {
+            height: 130px; 
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 89, 179, 0.3);
+            color: #d1d1d1;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            font-weight: 300;
+            font-size: 0.75rem; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .box:hover {
+            background: rgba(0, 89, 179, 0.15);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        #dot {
+            width: 5px;
+            height: 5px;
+            background: #ffffff;
+            position: fixed;
+            z-index: 10000;
+            pointer-events: none;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #ring {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(0, 89, 179, 0.6);
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dot"></div>
+    <div id="ring"></div>
+
+    <div class="container">
+        <a href="https://anatomy-gihw1.b-cdn.net/" class="box">Waves</a>
+
+        <a href="https://fernsplantingschool.b-cdn.net/" class="box">Fern</a>
+
+        <a href="https://sites.google.com/view/how-to-be-smarter/dogeub" class="box">Dogeub</a>
+
+        <a href="https://auth.e-c-h-o.tw/" class="box">Petezah</a>
+
+        <a href="https://slayer.b-cdn.net/" class="box">Rosin</a>
+
+        <a href="https://lightspeeddontblock.b-cdn.net/" class="box">Froggies Arcade</a>
+
+        <a href="https://lordcheesydathird.b-cdn.net/" class="box">Cheesy</a>
+    </div>
+
+    <script>
+        const dot = document.getElementById('dot');
+        const ring = document.getElementById('ring');
+
+        const updatePos = (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            dot.style.left = x + 'px';
+            dot.style.top = y + 'px';
+            ring.animate({ left: x + 'px', top: y + 'px' }, { duration: 500, fill: "forwards", easing: "ease-out" });
+        };
+
+        window.addEventListener('mousemove', updatePos);
+
+        document.querySelectorAll('.box').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                ring.style.width = '60px';
+                ring.style.height = '60px';
+                ring.style.background = 'rgba(0, 89, 179, 0.1)';
+                ring.style.borderColor = '#ffffff';
+            });
+            el.addEventListener('mouseleave', () => {
+                ring.style.width = '30px';
+                ring.style.height = '30px';
+                ring.style.background = 'transparent';
+                ring.style.borderColor = 'rgba(0, 89, 179, 0.6)';
+            });
+        });
+    </script>
+</body>
+</html>
