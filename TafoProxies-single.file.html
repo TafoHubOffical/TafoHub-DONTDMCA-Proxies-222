@@ -90,22 +90,24 @@
     <div id="ring"></div>
 
     <div class="container">
-        <a href="https://anatomy-gihw1.b-cdn.net/" class="box">Waves</a>
-
-        <a href="https://fernsplantingschool.b-cdn.net/" class="box">Fern</a>
-
-        <a href="https://sites.google.com/view/how-to-be-smarter/dogeub" class="box">Dogeub</a>
-
-        <a href="https://auth.e-c-h-o.tw/" class="box">Petezah</a>
-
-        <a href="https://bypass.tools/" class="box">Rosin</a>
-
-        <a href="https://lightspeeddontblock.b-cdn.net/" class="box">Froggies Arcade</a>
-
-        <a href="https://lordcheesydathird.b-cdn.net/" class="box">Cheesy</a>
+        <a href="#" onclick="updateLink('https://anatomy-gihw1.b-cdn.net/')" class="box">Waves</a>
+        <a href="#" onclick="updateLink('https://fernsplantingschool.b-cdn.net/')" class="box">Fern</a>
+        <a href="#" onclick="updateLink('https://sites.google.com/view/how-to-be-smarter/dogeub')" class="box">Dogeub</a>
+        <a href="#" onclick="updateLink('https://auth.e-c-h-o.tw/')" class="box">Petezah</a>
+        <a href="#" onclick="updateLink('https://slayer.b-cdn.net/')" class="box">Rosin</a>
+        <a href="#" onclick="updateLink('https://lightspeeddontblock.b-cdn.net/')" class="box">Froggies Arcade</a>
+        <a href="#" onclick="updateLink('https://lordcheesydathird.b-cdn.net/')" class="box">Cheesy</a>
     </div>
 
     <script>
+        // Auto-update Link Logic using the provided JS Deliver / GitHub format
+        function updateLink(baseUrl) {
+            const timestamp = new Date().getTime();
+            // Appends the timestamp to ensure the proxy is the latest version
+            const finalUrl = baseUrl + "?t=" + timestamp;
+            window.location.href = finalUrl;
+        }
+
         const dot = document.getElementById('dot');
         const ring = document.getElementById('ring');
 
