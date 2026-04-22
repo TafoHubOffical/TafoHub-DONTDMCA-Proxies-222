@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TafoHub Proxy</title>
+    <title>TafoHub Proxy - Integrated Embed</title>
     <style>
         * {
             margin: 0;
@@ -24,6 +24,7 @@
             overflow: hidden;
         }
 
+        /* Grid Container */
         .container {
             display: grid;
             grid-template-columns: repeat(7, 1fr); 
@@ -60,6 +61,49 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
         }
 
+        /* Overlay System */
+        #embed-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+
+        #proxy-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        #close-btn:hover {
+            background: #ff0000;
+        }
+
+        /* Custom Cursor */
         #dot {
             width: 5px;
             height: 5px;
@@ -86,42 +130,66 @@
 </head>
 <body>
 
+    <div id="embed-overlay">
+        <button id="close-btn" onclick="closeProxy()">×</button>
+        <iframe id="proxy-frame" src=""></iframe>
+    </div>
+
     <div id="dot"></div>
     <div id="ring"></div>
 
     <div class="container">
-        <a href="#" onclick="updateLink('https://anatomy-gihw1.b-cdn.net/')" class="box">Waves</a>
-        <a href="#" onclick="updateLink('https://fernsplantingschool.b-cdn.net/')" class="box">Fern</a>
-        <a href="#" onclick="updateLink('https://sites.google.com/view/how-to-be-smarter/dogeub')" class="box">Dogeub</a>
-        <a href="#" onclick="updateLink('https://auth.e-c-h-o.tw/')" class="box">Petezah</a>
-        <a href="#" onclick="updateLink('https://slayer.b-cdn.net/')" class="box">Rosin</a>
-        <a href="#" onclick="updateLink('https://lightspeeddontblock.b-cdn.net/')" class="box">Froggies Arcade</a>
-        <a href="#" onclick="updateLink('https://lordcheesydathird.b-cdn.net/')" class="box">Cheesy</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://anatomy-gihw1.b-cdn.net/')" class="box">Waves</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://s3.amazonaws.com/bulledu/index.html')" class="box">Fern</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://ihaveapetdoge-gannon-foster.b-cdn.net/')" class="box">Dogeub</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://readandlearnllc.s3.us-east-2.amazonaws.com/index.html')" class="box">VoidNetwork</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://onlinelearning.b-cdn.net/')" class="box">Shadow</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://parkviewpylusd.org/')" class="box">Froggies Arcade</a>
+        <a href="javascript:void(0)" onclick="openProxy('https://ahhdihcheese.b-cdn.net/')" class="box">Cheesy</a>
     </div>
 
     <script>
-        // Auto-update Link Logic using the provided JS Deliver / GitHub format
-        function updateLink(baseUrl) {
+        // Embed Functions
+        function openProxy(baseUrl) {
             const timestamp = new Date().getTime();
-            // Appends the timestamp to ensure the proxy is the latest version
-            const finalUrl = baseUrl + "?t=" + timestamp;
-            window.location.href = finalUrl;
+            const finalUrl = baseUrl.includes('?') ? baseUrl + "&t=" + timestamp : baseUrl + "?t=" + timestamp;
+            
+            const overlay = document.getElementById('embed-overlay');
+            const frame = document.getElementById('proxy-frame');
+            
+            frame.src = finalUrl;
+            overlay.style.display = 'block';
+            
+            // Hide custom cursor while viewing proxy to avoid interference
+            document.getElementById('dot').style.display = 'none';
+            document.getElementById('ring').style.display = 'none';
         }
 
+        function closeProxy() {
+            const overlay = document.getElementById('embed-overlay');
+            const frame = document.getElementById('proxy-frame');
+            
+            frame.src = ''; // Stop the proxy content
+            overlay.style.display = 'none';
+            
+            // Bring back custom cursor
+            document.getElementById('dot').style.display = 'block';
+            document.getElementById('ring').style.display = 'block';
+        }
+
+        // Cursor Logic
         const dot = document.getElementById('dot');
         const ring = document.getElementById('ring');
 
-        const updatePos = (e) => {
+        window.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
             dot.style.left = x + 'px';
             dot.style.top = y + 'px';
             ring.animate({ left: x + 'px', top: y + 'px' }, { duration: 500, fill: "forwards", easing: "ease-out" });
-        };
+        });
 
-        window.addEventListener('mousemove', updatePos);
-
-        document.querySelectorAll('.box').forEach(el => {
+        document.querySelectorAll('.box, #close-btn').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 ring.style.width = '60px';
                 ring.style.height = '60px';
