@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TafoHub Proxy - Integrated Embed</title>
+    <title>TafoHub Proxy</title>
     <style>
         * {
             margin: 0;
@@ -60,48 +60,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
         }
 
-        #embed-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 1000;
-            display: none; 
-        }
-
-        #proxy-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-
-        #close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 30px;
-            height: 30px;
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            transition: background 0.2s;
-            cursor: pointer;
-        }
-
-        #close-btn:hover {
-            background: #ff0000;
-        }
-
         #dot {
             width: 5px;
             height: 5px;
@@ -128,48 +86,36 @@
 </head>
 <body>
 
-    <div id="embed-overlay">
-        <button id="close-btn" onclick="closeProxy()">×</button>
-        <iframe id="proxy-frame" src="" allowfullscreen sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
-    </div>
-
     <div id="dot"></div>
     <div id="ring"></div>
 
     <div class="container">
-        <a href="javascript:void(0)" onclick="openProxy('https://cine-os-top.b-cdn.net/')" class="box">Cine-OS</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://lsrelay-extension-production.s3.amazonaws.com/index.html')" class="box">Fern</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://ihaveapetdoge-gannon-foster.b-cdn.net/')" class="box">Dogeub</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://readandlearnllc.s3.us-east-2.amazonaws.com/index.html')" class="box">VoidNetwork</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://onlinelearning.b-cdn.net/')" class="box">Shadow</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://parkviewpylusd.org/')" class="box">Froggies Arcade</a>
-        <a href="javascript:void(0)" onclick="openProxy('https://cheesycheesepull.b-cdn.net/')" class="box">Cheesy</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://cine-os-top.b-cdn.net/')" class="box">Cine-OS</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://lsrelay-extension-production.s3.amazonaws.com/index.html')" class="box">Fern</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://ihaveapetdoge-gannon-foster.b-cdn.net/')" class="box">Dogeub</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://readandlearnllc.s3.us-east-2.amazonaws.com/index.html')" class="box">VoidNetwork</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://onlinelearning.b-cdn.net/')" class="box">Shadow</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://parkviewpylusd.org/')" class="box">Froggies Arcade</a>
+        <a href="javascript:void(0)" onclick="openBlank('https://cheesycheesepull.b-cdn.net/')" class="box">Cheesy</a>
     </div>
 
     <script>
-        function openProxy(baseUrl) {
+        function openBlank(baseUrl) {
             const timestamp = new Date().getTime();
             const finalUrl = baseUrl.includes('?') ? baseUrl + "&t=" + timestamp : baseUrl + "?t=" + timestamp;
             
-            const overlay = document.getElementById('embed-overlay');
-            const frame = document.getElementById('proxy-frame');
-            
-            frame.src = finalUrl;
-            overlay.style.display = 'block';
-            
-            document.getElementById('dot').style.display = 'none';
-            document.getElementById('ring').style.display = 'none';
-        }
-
-        function closeProxy() {
-            const overlay = document.getElementById('embed-overlay');
-            const frame = document.getElementById('proxy-frame');
-            
-            frame.src = ''; 
-            overlay.style.display = 'none';
-            
-            document.getElementById('dot').style.display = 'block';
-            document.getElementById('ring').style.display = 'block';
+            const win = window.open('about:blank', '_blank');
+            if (win) {
+                win.document.body.style.margin = '0';
+                win.document.body.style.height = '100vh';
+                const iframe = win.document.createElement('iframe');
+                iframe.style.border = 'none';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.margin = '0';
+                iframe.src = finalUrl;
+                win.document.body.appendChild(iframe);
+            }
         }
 
         const dot = document.getElementById('dot');
@@ -183,7 +129,7 @@
             ring.animate({ left: x + 'px', top: y + 'px' }, { duration: 500, fill: "forwards", easing: "ease-out" });
         });
 
-        document.querySelectorAll('.box, #close-btn').forEach(el => {
+        document.querySelectorAll('.box').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 ring.style.width = '60px';
                 ring.style.height = '60px';
